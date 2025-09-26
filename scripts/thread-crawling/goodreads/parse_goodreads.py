@@ -13,7 +13,8 @@ from bs4 import BeautifulSoup
 
 def parse_thread_filename(thread_filepath: str) -> Dict[str, any]:
     _, thread_filename = os.path.split(thread_filepath)
-    if m := re.search(r"crawl_date_(\d{4}-\d{2}-\d{2})-solve_type_(solved|unsolved)-thread_(\d+)-.*-page_(\d+)", thread_filename):
+    pattern = r"crawl_date_(\d{4}-\d{2}-\d{2})-solve_type_(solved|unsolved)-thread_(\d+)-.*page_(\d+)"
+    if m := re.search(pattern, thread_filename):
         return {
             'crawl_date': m.group(1),
             'solve_type': m.group(2),
@@ -291,11 +292,11 @@ def extract_unsolved_threads(unsolved_file):
 
 
 def main():
-    thread_dir = '../data/books/goodreads_crawl/thread_pages'
+    thread_dir = '../../../data/books/goodreads_crawl/thread_pages'
     thread_files = glob.glob(os.path.join(thread_dir, f'crawl_date_*'))
     print(f"Number of thread files: {len(thread_files)}")
     thread_file_map = parse_thread_filenames(thread_files)
-    out_dir = '../data/books/goodreads_crawl/parsed_threads/'
+    out_dir = '../../../data/books/goodreads_crawl/parsed_threads/'
 
     for thread_id in thread_file_map:
         topic_details = parse_thread(thread_file_map[thread_id])

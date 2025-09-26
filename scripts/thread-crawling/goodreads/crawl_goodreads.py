@@ -14,7 +14,7 @@ from parse_goodreads import extract_solve_type_threads
 
 
 def read_list_page_filenames(solve_type: Dict[str, any]):
-    fname = f'{solve_type["solve_type"]}-page_*-date_{solve_type["crawl_date"]}.html'
+    fname = f'solve_type_{solve_type["solve_type"]}-tag_{solve_type["tag"]}-page_*-date_{solve_type["crawl_date"]}.html'
     return glob.glob(os.path.join(solve_type['page_dir'], fname))
 
 
@@ -60,7 +60,7 @@ def crawl_solve_type_list_pages(solve_type: Dict[str, any]):
             today = datetime.date.today().isoformat()
             if os.path.exists(solve_type['page_dir']) is False:
                 os.mkdir(solve_type['page_dir'])
-            fname = f'{solve_type["solve_type"]}-page_{page}-date_{today}.html'
+            fname = f'solve_type_{solve_type["solve_type"]}-tag_{solve_type["tag"]}-page_{page}-date_{today}.html'
             list_page_filepath = os.path.join(solve_type['page_dir'], fname)
             if os.path.exists(list_page_filepath):
                 continue
@@ -136,24 +136,50 @@ def main():
         {
             'solve_type': 'unsolved',
             'group_url': "https://www.goodreads.com/topic/group_folder/2198?group_id=185",
-            'page_dir': '../data/books/goodreads_crawl/unsolved_pages',
+            'tag': 'unsolved',
+            'page_dir': '../../../data/books/goodreads_crawl/unsolved_pages',
             'num_pages': 20,
             'crawl_date': today
         },
         {
             'solve_type': 'solved',
             'group_url': "https://www.goodreads.com/topic/group_folder/990?group_id=185",
-            'page_dir': '../data/books/goodreads_crawl/solved_pages',
+            'tag': 'adult_fiction',
+            'page_dir': '../../../data/books/goodreads_crawl/solved_pages',
+            'num_pages': 20,
+            'crawl_date': today
+        },
+        {
+            'solve_type': 'solved',
+            'group_url': "https://www.goodreads.com/topic/group_folder/988?group_id=185",
+            'tag': 'children_ya',
+            'page_dir': '../../../data/books/goodreads_crawl/solved_pages',
+            'num_pages': 20,
+            'crawl_date': today
+        },
+        {
+            'solve_type': 'solved',
+            'group_url': "https://www.goodreads.com/topic/group_folder/991?group_id=185",
+            'tag': 'non_fiction',
+            'page_dir': '../../../data/books/goodreads_crawl/solved_pages',
+            'num_pages': 20,
+            'crawl_date': today
+        },
+        {
+            'solve_type': 'solved',
+            'group_url': "https://www.goodreads.com/topic/group_folder/1001?group_id=185",
+            'tag': 'other_fiction',
+            'page_dir': '../../../data/books/goodreads_crawl/solved_pages',
             'num_pages': 20,
             'crawl_date': today
         }
     ]
 
-    thread_dir = '../data/books/goodreads_crawl/thread_pages'
+    thread_dir = '../../../data/books/goodreads_crawl/thread_pages'
     if os.path.exists(thread_dir) is False:
         os.mkdir(thread_dir)
 
-    for solve_type in solve_types:
+    for solve_type in solve_types[1:]:
         print(f"crawling {solve_type['solve_type']} thread pages in crawl date {crawl_date}")
         crawl_solve_type_list_pages(solve_type)
         solve_type_files = read_list_page_filenames(solve_type)
