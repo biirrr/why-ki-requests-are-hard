@@ -123,22 +123,25 @@ def extract_readinglog(records: List[Dict[str, any]]):
             answer_id = f"https://openlibrary.org{doc['key']}"
             doc_title = doc['title']
             doc_author = '; '.join(get_oa_authors(doc, normalise=False))
+            first_publish_year = doc['first_publish_year'] if 'first_publish_year' in doc else None
         else:
             readinglog_count = 0
             answer_id = None
             doc_title = None
             doc_author = None
+            first_publish_year = None
             no_match += 1
             print(f"no match {no_match}: record num {ri}\treadinglog_count: {readinglog_count}")
-        row = [ri, record['thread_id'], record['answer'], record['author'], answer_id, doc_title, doc_author,
-               readinglog_count]
-        if len(row) > 8:
-            print(row)
-            break
+        row = [
+            ri, record['thread_id'], record['answer'], record['author'],
+            answer_id, doc_title, doc_author,
+            readinglog_count, first_publish_year
+        ]
         readinglog_rows.append(row)
     readinglog_cols = [
         'req_no', 'thread_id', 'answer_title', 'answer_author',
-        'work_id', 'work_title','work_author', 'readinglog_count'
+        'work_id', 'work_title','work_author',
+        'readinglog_count', 'first_publish_year'
     ]
     readinglog_df = pd.DataFrame(readinglog_rows, columns=readinglog_cols)
     return readinglog_df
