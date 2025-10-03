@@ -28,6 +28,18 @@ for category in CATEGORIES:
                     ]
                 )
                 print("", key2, chi2.pvalue, chi2.statistic)
+    print("-----")
+    chi2 = stats.chi2_contingency(
+        [
+            [plot_counts["unsolved"], 50 - plot_counts["unsolved"]],
+            [
+                plot_counts["solved"] + plot_counts["llm-solved"],
+                100 - plot_counts["solved"] - plot_counts["llm-solved"],
+            ],
+        ]
+    )
+    print("", "shared-plot-count", chi2.pvalue, chi2.statistic)
+    print("-----")
 
     plot_character_lengths = {"unsolved": [], "solved": [], "llm-solved": []}
     plot_word_lengths = {"unsolved": [], "solved": [], "llm-solved": []}
