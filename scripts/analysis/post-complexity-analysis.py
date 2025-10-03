@@ -3,7 +3,7 @@
 import json
 from scipy import stats
 
-CATEGORIES = ["games"]
+CATEGORIES = ["books", "games", "movies"]
 
 
 for category in CATEGORIES:
@@ -24,6 +24,7 @@ for category in CATEGORIES:
         readabilities[entry["data"]["category"]].append(
             entry["stats"]["full_post_readability"]
         )
+    print("Character length")
     for key in ["unsolved", "solved", "llm-solved"]:
         print(
             category,
@@ -43,6 +44,7 @@ for category in CATEGORIES:
                     character_lengths[key], character_lengths[key2]
                 )
                 print("", key, key2, wilcoxon.pvalue, wilcoxon.statistic)
+    print("Word length")
     for key in ["unsolved", "solved", "llm-solved"]:
         print(
             category,
@@ -60,6 +62,7 @@ for category in CATEGORIES:
             if key != key2:
                 wilcoxon = stats.ranksums(word_lengths[key], word_lengths[key2])
                 print("", key, key2, wilcoxon.pvalue, wilcoxon.statistic)
+    print("Readability")
     for key in ["unsolved", "solved", "llm-solved"]:
         print(
             category,
