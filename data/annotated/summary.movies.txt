@@ -1,0 +1,46 @@
+MOVIES
+2,427	 number of all threads collected from Reddit
+898	 number of all sampled threads, in Google Sheet (37.0% of total)
+1,529	 number of unchecked threads, not in Google Sheet (63.0% of total)
+
+804	 number of annotated threads (89.5% of all sampled threads)
+94	 number of unannotated threads (10.5% of all sampled threads)
+
+497	 number of solved threads (61.8% of all annotated)
+170	 number of unsolved threads (21.1% of all annotated)
+137	 number of unusable threads (17.0% of all annotated)
+
+21	 number of threads solved by OP themselves (4.2% of all solved threads)
+476	 number of threads solved by other users (95.8% of all solved threads)
+
+6,272	 number of all thread comments
+2,926	 number of solved thread comments
+
+4.59	 avg. no. of replies in all threads (N = 2,427, SD = 6.18, Md = 3.00, max = 91, min = 0)
+3.19	 avg. no. of replies in all unchecked threads (N = 1,529, SD = 4.84, Md = 2.00, max = 89, min = 0)
+6.98	 avg. no. of replies in sampled threads (N = 898, SD = 7.37, Md = 5.00, max = 91, min = 1)
+5.89	 avg. no. of replies in solved threads (N = 497, SD = 5.27, Md = 4.00, max = 58, min = 1)
+9.65	 avg. no. of replies in unsolved threads (N = 170, SD = 12.03, Md = 6.00, max = 91, min = 1)
+
+2.67	 avg. no. of replies needed to solve a request (N = 497, SD = 2.73, Md = 2.00, max = 39, min = 0)
+4.46	 avg. no. of replies needed to confirm a request (N = 497, SD = 3.71, Md = 3.00, max = 51, min = 0)
+
+2.54	 avg. no of unique users replying in all threads (N = 2,427, SD = 4.31, Md = 1.00, max = 82, min = 0)
+3.62	 avg. no of unique users replying in sampled threads (N = 898, SD = 5.15, Md = 2.00, max = 82, min = 0)
+2.92	 avg. no of unique users replying in solved threads (N = 497, SD = 3.26, Md = 2.00, max = 31, min = 0)
+5.31	 avg. no of unique users replying in unsolved threads (N = 170, SD = 9.06, Md = 3.00, max = 82, min = 0)
+2.81	 avg. no of unique users replying before a thread is confirmed solved (N = 497, SD = 2.43, Md = 2.00, max = 23, min = 0)
+
+1.46	 avg. no of OP replies (until confirmation) in solved threads (N = 497, SD = 1.31, Md = 1.00, max = 20, min = 0)
+1.85	 avg. no of OP replies (in total) in solved threads (N = 497, SD = 1.66, Md = 1.00, max = 21, min = 1)
+3.06	 avg. no of OP replies (in total) in unsolved threads (N = 170, SD = 3.22, Md = 2.00, max = 26, min = 1)
+
+123.9	 avg. length of solved requests in words (N = 497, SD = 71.68, Md = 106.0, max = 547, min = 15)
+141.0	 avg. length of unsolved requests in words (N = 170, SD = 99.17, Md = 119.0, max = 968, min = 21)
+126.2	 avg. length of unchecked requests in words (N = 1,529, SD = 113.44, Md = 102.0, max = 2,018, min = 1)
+653.1	 avg. length of solved requests in chars (N = 497, SD = 381.05, Md = 558.0, max = 2,942, min = 90)
+749.4	 avg. length of unsolved requests in chars (N = 170, SD = 529.11, Md = 633.5, max = 5,130, min = 136)
+686.3	 avg. length of unchecked requests in chars (N = 1,529, SD = 696.96, Md = 540.0, max = 14,080, min = 26)
+
+4.7	 avg. popularity of solved requests in words (N = 497, SD = 7.27, Md = 3.0, max = 64, min = 0)
+5.2	 avg. popularity of unsolved requests in words (N = 170, SD = 22.91, Md = 2.0, max = 295, min = 21)
