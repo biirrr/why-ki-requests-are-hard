@@ -37,7 +37,7 @@ for category in CATEGORIES:
         reader = csv.DictReader(in_f, delimiter="\t")
         for line in reader:
             for entry in entries:
-                if line["thread_id"] == entry["data"]["thread_id"]:
+                if str(line["thread_id"]) == str(entry["data"]["thread_id"]):
                     if "stats" not in entry:
                         entry["stats"] = {}
                     for key in STATS_KEYS:
