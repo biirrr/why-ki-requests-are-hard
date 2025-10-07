@@ -2,7 +2,7 @@ import json
 
 from scipy import stats
 
-CATEGORIES = ["books", "games"]
+CATEGORIES = ["books", "games", "movies"]
 
 for category in CATEGORIES:
     with open(f"data/annotated/{category}.json") as in_f:
