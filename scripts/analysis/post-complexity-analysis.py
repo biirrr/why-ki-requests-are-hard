@@ -3,7 +3,7 @@
 import json
 from scipy import stats
 
-CATEGORIES = ["games"]
+CATEGORIES = ["books", "games", "movies"]
 
 
 for category in CATEGORIES:
@@ -24,6 +24,7 @@ for category in CATEGORIES:
         readabilities[entry["data"]["category"]].append(
             entry["stats"]["full_post_readability"]
         )
+    print("Character length")
     for key in ["unsolved", "solved", "llm-solved"]:
         print(
             category,
@@ -42,7 +43,15 @@ for category in CATEGORIES:
                 wilcoxon = stats.ranksums(
                     character_lengths[key], character_lengths[key2]
                 )
-                print("", key, key2, wilcoxon.pvalue, wilcoxon.statistic)
+                print(
+                    "",
+                    key,
+                    key2,
+                    wilcoxon.pvalue,
+                    wilcoxon.statistic,
+                    "!!!" if wilcoxon.pvalue < 0.05 else "",
+                )
+    print("Word length")
     for key in ["unsolved", "solved", "llm-solved"]:
         print(
             category,
@@ -59,7 +68,15 @@ for category in CATEGORIES:
         for key2 in ["unsolved", "solved", "llm-solved"]:
             if key != key2:
                 wilcoxon = stats.ranksums(word_lengths[key], word_lengths[key2])
-                print("", key, key2, wilcoxon.pvalue, wilcoxon.statistic)
+                print(
+                    "",
+                    key,
+                    key2,
+                    wilcoxon.pvalue,
+                    wilcoxon.statistic,
+                    "!!!" if wilcoxon.pvalue < 0.05 else "",
+                )
+    print("Readability")
     for key in ["unsolved", "solved", "llm-solved"]:
         print(
             category,
@@ -76,4 +93,11 @@ for category in CATEGORIES:
         for key2 in ["unsolved", "solved", "llm-solved"]:
             if key != key2:
                 wilcoxon = stats.ranksums(readabilities[key], readabilities[key2])
-                print("", key, key2, wilcoxon.pvalue, wilcoxon.statistic)
+                print(
+                    "",
+                    key,
+                    key2,
+                    wilcoxon.pvalue,
+                    wilcoxon.statistic,
+                    "!!!" if wilcoxon.pvalue < 0.05 else "",
+                )

@@ -3,7 +3,7 @@
 import json
 from scipy import stats
 
-CATEGORIES = ["games"]
+CATEGORIES = ["books", "games", "movies"]
 
 
 for category in CATEGORIES:
@@ -30,6 +30,7 @@ for category in CATEGORIES:
             if annotation["value"]["end"] < entry["stats"]["title_length_chars"]:
                 count = count + 1
         in_title_annotations[entry["data"]["category"]].append(count)
+    print("Character length")
     for key in ["unsolved", "solved", "llm-solved"]:
         print(
             category,
@@ -48,7 +49,15 @@ for category in CATEGORIES:
                 wilcoxon = stats.ranksums(
                     character_lengths[key], character_lengths[key2]
                 )
-                print("", key, key2, wilcoxon.pvalue, wilcoxon.statistic)
+                print(
+                    "",
+                    key,
+                    key2,
+                    wilcoxon.pvalue,
+                    wilcoxon.statistic,
+                    "!!!" if wilcoxon.pvalue < 0.05 else "",
+                )
+    print("Word length")
     for key in ["unsolved", "solved", "llm-solved"]:
         print(
             category,
@@ -66,6 +75,7 @@ for category in CATEGORIES:
             if key != key2:
                 wilcoxon = stats.ranksums(word_lengths[key], word_lengths[key2])
                 print("", key, key2, wilcoxon.pvalue, wilcoxon.statistic)
+    print("Readability")
     for key in ["unsolved", "solved", "llm-solved"]:
         print(
             category,
@@ -82,7 +92,15 @@ for category in CATEGORIES:
         for key2 in ["unsolved", "solved", "llm-solved"]:
             if key != key2:
                 wilcoxon = stats.ranksums(readabilities[key], readabilities[key2])
-                print("", key, key2, wilcoxon.pvalue, wilcoxon.statistic)
+                print(
+                    "",
+                    key,
+                    key2,
+                    wilcoxon.pvalue,
+                    wilcoxon.statistic,
+                    "!!!" if wilcoxon.pvalue < 0.05 else "",
+                )
+    print("In title annotations")
     for key in ["unsolved", "solved", "llm-solved"]:
         print(
             category,
@@ -101,4 +119,11 @@ for category in CATEGORIES:
                 wilcoxon = stats.ranksums(
                     in_title_annotations[key], in_title_annotations[key2]
                 )
-                print("", key, key2, wilcoxon.pvalue, wilcoxon.statistic)
+                print(
+                    "",
+                    key,
+                    key2,
+                    wilcoxon.pvalue,
+                    wilcoxon.statistic,
+                    "!!!" if wilcoxon.pvalue < 0.05 else "",
+                )
