@@ -13,11 +13,7 @@ from time import sleep
 from httpx import Client
 
 
-class SearchMode(str, Enum):
-    """Search modes."""
-
-    DEFAULT = "default"
-    EXACT = "exact"
+genre_cache = {}
 
 
 def get_game(game_id: str) -> dict | None:
@@ -63,6 +59,7 @@ def get_game(game_id: str) -> dict | None:
                 else:
                     entry["release_years"] = []
             if len(results) == 1:
+                sleep(0.3)
                 response = client.post(
                     "https://api.igdb.com/v4/popularity_primitives",
                     headers=[
@@ -78,6 +75,30 @@ def get_game(game_id: str) -> dict | None:
                     if pop_result["popularity_type"] in [2, 3, 4]:
                         popularity_score = popularity_score + pop_result["value"]
                 results[0]["popularity_score"] = popularity_score
+                genre_popularities = [0]
+                if "genres" in results[0]:
+                    for genre_id in results[0]["genres"]:
+                        sleep(0.3)
+                        response = client.post(
+                            "https://api.igdb.com/v4/multiquery",
+                            headers=[
+                                ("Client-ID", os.environ["IGDB_ID"]),
+                                (
+                                    "Authorization",
+                                    f"Bearer {auth_data['access_token']}",
+                                ),
+                                ("Accept", "application/json"),
+                            ],
+                            data='query games/count "Count of Games" { where genres='
+                            + str(genre_id)
+                            + " ; };",
+                        )
+                        tmp_result = response.json()
+                        if "count" in tmp_result[0]:
+                            genre_popularities.append(tmp_result[0]["count"])
+                        else:
+                            print(tmp_result)
+                results[0]["genre_popularity"] = max(genre_popularities)
                 return results[0]
 
     return None
@@ -101,8 +122,7 @@ for entry in entries:
                                 "release_years"
                             ][0]
                         entry["stats"]["popularity_score"] = game["popularity_score"]
-                        if "first_published_year" in entry["stats"]:
-                            del entry["stats"]["first_published_year"]
+                        entry["stats"]["genre_popularity"] = game["genre_popularity"]
 
 with open("data/annotated/games.json", "w") as out_f:
     json.dump(entries, out_f)

@@ -27,6 +27,32 @@ def get_movie(imdb_id: str):
     return None
 
 
+def get_genre_popularity(genre_id: str):
+    popularity = 0
+    with Client(timeout=30) as client:
+        response = client.get(
+            f"https://api.themoviedb.org/3/discover/movie?with_genres={genre_id}",
+            headers=[
+                ("Authorization", f"Bearer {os.environ['TMDB_TOKEN']}"),
+                ("Accept", "application/json"),
+            ],
+        )
+        if response.status_code == 200:
+            popularity = popularity + response.json()["total_results"]
+        response = client.get(
+            f"https://api.themoviedb.org/3/discover/tv?with_genres={genre_id}",
+            headers=[
+                ("Authorization", f"Bearer {os.environ['TMDB_TOKEN']}"),
+                ("Accept", "application/json"),
+            ],
+        )
+        if response.status_code == 200:
+            popularity = popularity + response.json()["total_results"]
+    return popularity
+
+
+genre_cache = {}
+
 with open("data/annotated/movies.json") as in_f:
     entries = json.load(in_f)
 
@@ -45,6 +71,12 @@ for entry in entries:
                                 movie["release_date"][0:4]
                             )
                         entry["stats"]["popularity_score"] = movie["popularity"]
+                        genre_popularities = []
+                        for genre_id in movie["genre_ids"]:
+                            if genre_id not in genre_cache:
+                                genre_cache[genre_id] = get_genre_popularity(genre_id)
+                            genre_popularities.append(genre_cache[genre_id])
+                        entry["stats"]["genre_popularity"] = max(genre_popularities)
 
 with open("data/annotated/movies.json", "w") as out_f:
     json.dump(entries, out_f)
