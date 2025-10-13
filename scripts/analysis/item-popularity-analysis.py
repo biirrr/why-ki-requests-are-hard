@@ -2,19 +2,28 @@ import json
 
 from scipy import stats
 
-CATEGORIES = ["books"]
+CATEGORIES = ["books", "games", "movies"]
+
 for category in CATEGORIES:
     with open(f"data/annotated/{category}.json") as in_f:
         entries = json.load(in_f)
     readinglog_count = {"solved": [], "llm-solved": []}
     for entry in entries:
         if (
-            "first_publish_year" in entry["stats"]
+            "readinglog_count" in entry["stats"]
             and entry["stats"]["readinglog_count"] != "NA"
             and entry["data"]["category"] in readinglog_count
         ):
             readinglog_count[entry["data"]["category"]].append(
                 entry["stats"]["readinglog_count"]
+            )
+        if (
+            "popularity_score" in entry["stats"]
+            and entry["stats"]["popularity_score"] != "NA"
+            and entry["data"]["category"] in readinglog_count
+        ):
+            readinglog_count[entry["data"]["category"]].append(
+                entry["stats"]["popularity_score"]
             )
     for key in ["solved", "llm-solved"]:
         readinglog_count[key].sort()

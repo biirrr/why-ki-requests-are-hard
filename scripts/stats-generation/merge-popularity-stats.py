@@ -7,7 +7,7 @@ CATEGORIES = ["books"]
 STATS_FILENAMES = {
     "books": "data/books/book_answers-popularity.tsv",
 }
-STATS_KEYS = ["readinglog_count", "first_publish_year"]
+STATS_KEYS = ["readinglog_count", "first_publish_year", "genre_popularity"]
 
 
 for category in CATEGORIES:

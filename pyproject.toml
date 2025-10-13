@@ -3,6 +3,8 @@ name = "tip-of-the-tongue"
 version = "2025.10"
 requires-python = ">=3.12"
 dependencies = [
+    "httpx>=0.28.1",
     "pandas>=2.3.2",
     "scipy>=1.16.2",
+    "statsmodels>=0.14.5",
 ]
