@@ -29,3 +29,11 @@ There are two scripts:
 ## Analysis
 
 For the analysis dependencies, `uv` is required to do `uv run python python-file`.
+
+## Guidelines
+
+There are two sets of annotation guidelines:
+
+1. [solved/unsolved threads](./docs/Annotation%20Guidelines%20Solved_Unsolved%20Forum%20Threads%202025.pdf): guidelines for annotation the posts in a discussion thread to indicate whether a request is solved and which posts contain the solution and the confirmation.
+2. [span annotations in Label Studio](./docs/Annotation%20guidelines%20for%20Label%20Studio.pdf): guidelines for annotation spans of the request texts with categories of relevance aspects.
+
